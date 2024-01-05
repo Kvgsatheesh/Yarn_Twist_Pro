@@ -1,0 +1,82 @@
+{% extends "myapp/main.html" %}
+
+ {% block content %}
+ 
+
+ <style>
+    .add{
+        margin-left: auto;
+        margin-right: auto;
+        width: 20em
+    }
+
+ </style>
+<div class='add'>
+<form method =POST>
+    {% csrf_token %}
+   
+    
+  
+    <br><br>
+    <label for="Company">Company:</label>
+    <select id="Company" name="Company" class=form-control><br><br>
+        <option value="all" selectedOption>----</option>
+        {% for icompany in company  %}
+      
+        <option value= {{icompany.id}} >{{icompany}}</option>
+          
+        {% endfor %}
+        
+    </select>
+   
+    <label for="Colour">Colour:</label>
+    <select id="Colour" name="Colour" class=form-control><br><br>
+        <option value="all" selectedOption>----</option>
+        {% for icolour in colour  %}
+      
+        <option value= {{icolour.id}} >{{icolour}}</option>
+          
+        {% endfor %}
+        
+    </select>
+    
+    
+    <label for="Count">Count:</label>
+    <select id="Count" name="Count" class=form-control>
+        <option value="all" selectedOption>----</option>
+        {% for icount in count  %}
+      
+        <option value= {{icount.id}} >{{icount}}</option>
+          
+        {% endfor %}
+        
+    </select>
+
+      
+      <label for="TP">TP:</label>
+    <select id="TP" name="TP" class=form-control>
+        <option value="all" selectedOption>----</option>
+        {% for iTP in TP  %}
+      
+        <option value= {{iTP.id}} >{{iTP}}</option>
+          
+        {% endfor %}
+        
+    </select>
+
+
+      <br>
+      <label for="return">Return:</label>
+    <input type=text name="return" class=form-control>
+    <br>
+   
+    <input class= 'btn btn-primary' type='submit' value='submit'>
+        
+    {% comment %} <a href="{{request.META.HTTP_REFERER}}"><button type="button" class="btn btn-secondary"> Go back</button></a><br><br> {% endcomment %}
+
+</form>
+</div>
+
+
+
+{% endblock content %}

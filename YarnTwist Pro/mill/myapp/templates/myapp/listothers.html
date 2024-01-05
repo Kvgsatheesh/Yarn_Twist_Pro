@@ -1,0 +1,78 @@
+{% extends "myapp/main.html" %}
+
+{% block content %}
+
+<style>
+    .home {
+        display: grid;
+        grid-template-columns: 2fr 5fr ;
+        margin-left: 20px;
+        margin-right: 50px;
+
+    }
+</style>
+
+
+
+<div class='home'>
+
+    <div>
+        <h4>Staffs List</h4>
+        <ol> {%for staff in staff%}
+         <li><a style="text-decoration:none" href="{% url 'myapp:listothers'%}?q={{staff.id}}"><h5>{{staff}}</h5></a></li>
+         {%endfor%}</ol>
+
+    </div>
+
+
+
+  <div>
+            <h4> List</h4>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Staff</th>
+                    <th>Advance</th>
+                    <th>Bonus</th>
+                    <th></th>
+                
+                </tr>
+                </thead>
+                <tbody>
+                    
+                 
+
+                 
+                        {% for staff in staff  %}
+                        
+                         {% if adv.Staff == staff %}
+                         
+                    <tr>
+                        <td>{{adv.Date}}</td>
+                        <td>{{staff}}</td>
+                        <td>{{adv.Advance}}</td>
+                        <td>{{adv.Bonus}}</td>
+                      <td>
+                        
+                        <a href="{% url 'myapp:editothers' %}?q={{adv.id}}"><i class="bi bi-pencil-square"></i></a>
+                    </td>
+                    <td>
+                        <a href="{% url 'myapp:deleteothers' %}?q={{adv.id}}"><i class="bi bi-trash"></i></a>
+                        
+                        </td>
+                    
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+    </div>
+
+
+    
+</div>
+
+{% endblock %}

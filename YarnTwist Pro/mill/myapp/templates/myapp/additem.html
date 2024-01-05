@@ -1,0 +1,33 @@
+{% extends "myapp/main.html" %}
+
+ {% block content %}
+ 
+
+ <style>
+    .add{
+        margin-left: auto;
+        margin-right: auto;
+        width: 20em
+    }
+
+ </style>
+<div class='add'>
+<form method =POST>
+    {% csrf_token %}
+    
+    {% if avaliable  %}
+    <h6>Avaliable stocks is {{avaliable}}</h6>
+    
+    {% endif %}
+   
+    <br><br>
+    {{form.as_p}}
+    <input class = 'btn btn-primary' type='submit'>
+    {% comment %} <a href="{{request.META.HTTP_REFERER}}"><button type="button" class="btn btn-secondary"> Go back</button></a><br><br> {% endcomment %}
+
+</form>
+<div>
+
+
+
+{% endblock content %}

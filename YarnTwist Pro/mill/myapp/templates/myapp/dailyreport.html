@@ -1,0 +1,186 @@
+{% extends "myapp/main.html" %}
+
+ {% block content %}
+ <style>
+  .home {
+    display: grid;
+    grid-template-columns: 1fr .10fr ;
+    margin-left: 50px;
+      margin-right: 50px;
+
+}
+.first{
+  margin-right: 25px;
+}
+.second{
+  margin-left: 25px;
+}
+.centre{
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-left: 400px;
+      margin-right: 400px;
+}
+  
+    
+ </style>
+
+ <div class='centre'>
+      <h4>Details 
+        from <i>{{ start_of_week |date:"d - m - Y"}}</i>  to <i>{{today|date:"d - m - Y"}}</i>
+      </h4>
+        <br>
+</div>
+
+
+ <div class='home'>
+   
+    
+  <div class='first'>
+    <h5>Production and salary 
+      {% if   salary_day %}
+      for the week   {{ salary_day |date:"d - m - Y"}}
+     
+      {% endif %}</h5>
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Total Shift</th>
+                  <th>Total Cheese</th>
+                  <th>Total Doubled bag</th>
+                  <th>Total Salary</th>
+                </tr>
+              </thead>
+                <tbody>
+                  
+                  <tr>
+                      <td>{{total.total_tfo_shift}}</td>
+                      <td>{{total.total_cheese}}</td>
+                      <td>{{total.total_double}}</td>
+                      <td>{{total.total_salary|floatformat:"0"}}</td>
+                  </tr>
+              </tbody>
+          </table> 
+          <br>
+
+
+          <h5>Individual salary  
+            {% if  salary_day %}
+            for the week   {{ salary_day |date:"d - m - Y"}}
+           
+            {% endif %}</h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Shift</th>
+                <th>Cheese</th>
+                <th>Doubled bag</th>
+                <th>Salary</th>
+              </tr>
+            </thead>
+              <tbody>
+                {% for total in individualreport  %}
+                  
+                <tr>
+                  <th>
+                    {% for staff in staff  %}
+                      {% if staff.id == total.Staff %}
+                        {{staff|capfirst}}
+                      {% endif %}
+                    {% endfor %}
+                    
+                </th>
+                    <td>{{total.tfo_shift}}</td>
+                    <td>{{total.cheese_bal}}</td>
+                    <td>{{total.double_bal}}</td>
+                    <td>{{total.total_salary|floatformat:"0"}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
+        <br>
+  
+
+  
+    <h5>Company wise production</h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Company</th>
+                <th>Colour</th>
+                <th>Count</th>
+                <th>TP</th>
+                
+                <th>Cheese </th>
+                <th>Double</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+            
+              {% for dreport in dreport  %}
+                {% if dreport.Date %}
+                <tr>
+                        <td>{{dreport.Date|date:"d - m - Y"}}  </td>    
+                  {% for dcom in company %}
+                    {% if dcom.id == dreport.Company %}
+                          <td>{{dcom}}</td>
+                      {% for dcolours in colour  %}
+                          
+                        {% if dcolours.id == dreport.Colour %}
+                          
+                        {% for count in count  %}
+                      
+                        {% if  count.id == dreport.Count %}
+                         
+                          {% for tp in tp  %}
+                          
+                             {% if tp.id == dreport.Tp %}
+                              
+                            <td>{{dcolours}}</td>
+                            <td>{{count}}</td>
+                            <td>{{tp}}</td>
+
+                            <td> {{dreport.cheese_bal}} </td>
+                            <td>{{dreport.double_bal}}</td>
+                            
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                            
+                        {% endif %}
+                        
+                      {% endfor %}
+                
+                    {% endif %}
+                  {% endfor %}
+                </tr>
+                {% endif %}
+              {% endfor %}
+                
+                  
+          </tbody>
+        
+        
+        </table>
+      </div>
+  
+
+  
+  
+  
+  <div class='second'>
+    <form method=POST>
+      {% csrf_token %}
+      {{form.as_p}}
+      <input type=submit class= 'btn btn-primary' value='Get'>
+    </form>
+  </div>
+
+
+</div>
+
+{% endblock %}

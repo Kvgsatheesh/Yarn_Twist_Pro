@@ -1,0 +1,186 @@
+{% extends "myapp/main.html" %}
+
+
+{% block content %}
+<style>
+    .home {
+        display: grid;
+        grid-template-columns: .75fr 3fr 1fr;
+        margin-left:10px;
+        margin-right:1px
+
+    }
+
+    .list {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        margin-left:50px;
+        margin-right:50px
+
+    }
+    .top{
+        margin-right:50px;
+        margin-left:50px;
+    }
+</style>
+
+
+<div class="home">
+
+    <div>
+        <h4>List of companies</h4>
+        <ol> {%for com in company%}
+         <li><a style="text-decoration:none" href="{% url 'myapp:statement'%}?q={{com.id}}"><h5>{{com}}</h5></a></li>
+         {%endfor%}</ol>
+    </div>
+
+
+    <div> 
+        <b> {{comname|capfirst}}</b>'s statement 
+        <br>
+        <br>
+        <h5>Statement for stock and payment </h5> ** payment received goods yet to deliver<br>
+        {% if page == 'custom' %}
+            <table class="table table-striped">
+                <thead>
+                    <th>Selected Colour</th>
+                    <th>Selected Count</th>
+                    <th>Selected TP</th>
+                </thead>
+                <tr>
+                    <td>
+                        {{selcolour| capfirst}}
+                    </td>
+                    <td>
+                        {{selcount}}
+                    </td>
+                    <td>
+                        {{seltp}}
+                    </td>
+                </tr>
+            </table>       
+        {% endif %}
+        <table class="table table-striped">
+            <thead>
+                
+                <th>Total stock </th>
+                <th>Inward</th>
+                <th>Outward</th>
+                <th>Amount</th>
+            </thead>
+            <tr>
+                
+                <td> {{totalstocks.a}}</td>
+                <td>{{totalin.tin}}</td>
+                <td> 
+                    {% if totalout.tout < 0 %}
+                        {{abstotalout}}  **
+                         
+                    {% else %}
+                        {{abstotalout}}
+                    {% endif %}
+                </td>
+                <th>{{totalamount.t|floatformat:2}}</th>
+            </tr>
+             </table>
+        {% if selcolour == 'All' or page != 'custom' %}  
+          <table class="table table-striped" id="myTable">
+            <thead>
+                <th>Colour</th>
+                <th>Stock</th>
+                <th>Inward</th>
+                <th>Outward</th>
+                <th>Amount</th>
+             </thead>
+             <tbody>
+                
+                    {% for res in  result %}
+                    <tr> 
+                    <td>
+                        {% for col in col  %}
+                         {% if col.id == res.Colour %}
+                         {{col}}
+                         
+                         {% endif %}
+                        {% endfor %} 
+                    </td>
+                    <td>{{res.total_stock}}</td>
+                    <td>{{res.total_in}}</td>
+                    <td>{% if res.total_out < 0 %}
+                          {{res.total_out}}  **
+                       {% else %}
+                          {{res.total_out}}
+                       {% endif %}
+                     </td>
+                     <td>{{res.total_amount|floatformat:2}}</td>
+                    </tr>
+                {% endfor %}
+               
+             </tbody>
+            </table>
+        {% endif %}
+      
+    </div>
+
+
+
+
+
+
+
+<div class='top' >
+            <br>
+                <form method=POST>
+                    {% csrf_token %}     
+                    <label for="chooseColour">Colour:</label>
+                    <select id="chooseColour" name="chooseColour">
+                        <option value="all" selectedOption>All</option>
+                        {% for icolour in colour  %}
+                      
+                        <option value= {{icolour.id}} >{{icolour}}</option>
+                          
+                        {% endfor %}
+                        
+                    </select>
+            
+                      <br><br>
+                      <label for="count">Count:</label>
+                    <select id="count" name="count">
+                        <option value="all" selectedOption>All</option>
+                        {% for icount in count  %}
+                      
+                        <option value= {{icount.id}} >{{icount}}</option>
+                          
+                        {% endfor %}
+                        
+                    </select>
+            
+                      <br><br>
+                      <label for="TP">TP:</label>
+                    <select id="TP" name="TP">
+                        <option value="all" selectedOption>All</option>
+                        {% for iTP in TP  %}
+                      
+                        <option value= {{iTP.id}} >{{iTP}}</option>
+                          
+                        {% endfor %}
+                        
+                    </select>
+            
+                      <br><br>
+                    <input class= 'btn btn-primary' type='submit' value='get'>
+                    
+                </form>
+   
+</div>
+  
+
+    
+
+
+</div>
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,62 @@
+{% extends "myapp/main.html" %}
+
+{% block content %}
+
+
+
+<style>
+
+.del{
+    margin-left: auto;
+    margin-right: auto;
+    width: 50em
+}
+</style>
+
+<form method=POST>
+    {% csrf_token %}
+    <div class='del'><br><br>
+<h4>Delete the below entry??</h4>
+ 
+  
+ 
+ 
+  
+        <table class="table table-striped">
+            <thead>
+                <th>Date</th>
+                <th>Company</th>
+                <th>Colour</th>
+                {% if page == 'inventry' %}
+                <th>Inward</th>
+                <th>Outward</th>
+                {% else %}
+                <th>Cheese bag</th>
+                <th>Doubled bag</th>
+                <th>Tfo shift</th>
+                
+                {% endif %}
+            </thead>
+            <tr>
+                <td>{{form.Date|date:"d - m - Y"}}</td>
+                <td> {{form.Company|capfirst}}</td>
+                <td> {{form.Colour|capfirst}}</td>
+                {% if page == 'inventry' %}
+                <td>{{form.Inward}}</td>
+                <td>{{form.Outward}}</td>
+                {% else %}
+                <td>{{form.Cheese_bag}}</td>
+                <td> {{form.Double_bag}}</td>
+                <td>{{form.Tfo_shift}}</td>
+                
+                {% endif %}
+            </tr>
+        </table>
+        <br>
+    <input  class='btn btn-danger' type='submit' value='confirm delete'>
+    <a href="{{request.META.HTTP_REFERER}}"><button type="button" class="btn btn-secondary"> Go back</button></a><br><br>
+</div>
+</form>
+
+
+{% endblock content %}

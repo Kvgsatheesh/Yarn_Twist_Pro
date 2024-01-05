@@ -1,0 +1,60 @@
+{% extends "myapp/main.html" %}
+
+{% block content %}
+
+<style>
+    .home {
+        display: grid;
+        
+        margin-left: 400px;
+        margin-right: 400px;
+
+    }
+</style>
+
+
+<div class='home'>
+
+
+    <h4> Other Income List</h4>
+<br>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Paper Cone</th>
+                    <th>Bag</th>
+                    <th></th>
+                
+                </tr>
+                </thead>
+                <tbody>
+                    
+                 
+                        {% for item in item  %}
+                     <tr>
+                        <td>{{item.Date}}</td>
+                        <td>{{item.Paper_cone}}</td>
+                        <td>{{item.Bag}}</td>
+                      <td>
+                        <a href="{% url 'myapp:editotherincome' %}?q={{item.id}}"><i class="bi bi-pencil-square"></i></a>
+                    </td>
+                    <td>
+                        <a href="{% url 'myapp:deleteotherincome' %}?q={{item.id}}"><i class="bi bi-trash"></i></a>
+                        
+                        </td>
+                    
+                    </tr>
+                    
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+  
+
+
+    
+</div>
+
+{% endblock %}

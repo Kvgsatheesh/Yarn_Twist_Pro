@@ -1,0 +1,80 @@
+{% extends "myapp/main.html" %}
+
+ {% block content %}
+ <style>
+    .home {
+        display: grid;
+        grid-template-columns: .75fr 5fr 1fr;
+        margin-left:10px;
+        margin-right:1px
+
+    }
+
+    
+</style>
+
+<div class='home'>
+
+    <div>
+       
+    </div>
+
+
+
+
+     <div>
+        <h5>Production list</h5>
+        <table  class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Company</th>
+                <th>Colour</th>
+                <th>Count</th>
+                <th>TP</th>
+                <th>Cheese_bag</th>
+                <th>Doubled_bag</th>
+                <th>Tfo_shift</th>
+               
+                <th>Updated</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+                
+                    {% for data in pro  %}
+                    <tr>
+                    
+                    <td>{{data.Date|date:"d - m - Y"}}</td>
+                    <td>{{data.Company}}</td>
+                    <td>{{data.Colour}}</td>
+                    <td>{{data.Count}}</td>
+                    <td>{{data.Tp}}</td>
+                    <td>{{data.Cheese_bag}}</td>
+                    <td>{{data.Doubled_bag}}</td>
+                    <td>{{data.Tfo_shift}}</td>
+                    <td>
+                        <a href="{% url 'myapp:productionedit' %}?q={{data.id}}"><i class="bi bi-pencil-square"></i></a>
+                    </td>
+                    <td>
+                        <a href="{% url 'myapp:productiondelete' %}?q={{data.id}}"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr>
+                    {% endfor %}
+               
+            </tbody>
+        </table>
+
+
+
+
+
+</div>
+
+
+
+
+<div>
+</div>
+
+ {% endblock %}

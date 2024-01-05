@@ -1,0 +1,140 @@
+{% extends "myapp/main.html" %}
+
+ {% block content %}
+ 
+ <style>
+    .home {
+        display: grid;
+        grid-template-columns: 1fr 1fr 0.75fr 0.75fr 1fr 3fr;
+        margin-left: 5px;
+        margin-right: 5px;
+
+    }
+</style>
+
+<div class='home'>
+
+<div class='company'>
+      <h5>Company <h5>
+    <ol>
+    {% for company in company  %}
+     <li>
+        <a style="text-decoration:none" href="{% url 'myapp:updatecompany' %}?q={{company.id}}">{{company}}</a>
+     </li>
+    
+    {% endfor %}
+    <ol>
+</div>
+
+<div class='colour'>
+    <h5>Colour  <h5>
+        <ol>
+        {% for colour in colour  %}
+         <li>
+            <a style="text-decoration:none" href="{% url 'myapp:updatecolour' %}?q={{colour.id}}">{{colour}}</a>
+         </li>
+        
+        {% endfor %}
+        <ol>
+</div>
+
+<div class='count'>
+    <h5>Count  <h5>
+        <ol>
+        {% for count in count  %}
+         <li>
+            <a  style="text-decoration:none" href="{% url 'myapp:updatecount' %}?q={{count.id}}">{{count}}</a>
+         </li>
+        
+        {% endfor %}
+        <ol>
+</div>
+
+<div class='tp'>
+    <h5>TP  <h5>
+        <ol>
+        {% for tp in tp  %}
+         <li>
+            <a style="text-decoration:none" href="{% url 'myapp:updatetp' %}?q={{tp.id}}">{{tp}}</a>
+         </li>
+        
+        {% endfor %}
+        <ol>
+</div>
+
+<div class='staff'>
+    <h5>Staff  <h5>
+        <ol>
+        {% for staff in staff  %}
+         <li>
+            <a  style="text-decoration:none" href="{% url 'myapp:updatestaff' %}?q={{staff.id}}">{{staff}}</a>
+         </li>
+        
+        {% endfor %}
+        <ol>
+</div>
+
+<div class='price'>
+    <h5>Price  <h5>
+       
+        
+         
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th>Company</th>
+                <th>Count</th>
+                <th>TP</th>
+                <th>Per bag</th>
+                <th>Tfo rate</th>
+                <th>cheese rate</th>
+                <th>Doubled bag</th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for price in price  %}
+            <tr>
+                <td>
+                    {{price.Company}}
+                </td>
+                <td>
+                    {{price.Count}}
+                </td>
+                <td>
+                    {{price.Tp}}
+                </td>
+                <td>
+                    {{price.Per_bag}}
+                </td>
+                <td>
+                    {{price.Tfo_price}}
+                </td>
+                <td>
+                    {{price.Cheese_price}}
+                </td>
+                <td>
+                    {{price.Doubled_price}}
+                </td>
+                <td><a href="{% url 'myapp:updateprice' %}?q={{price.id}}"><i class="bi bi-pencil-square"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>       
+
+           
+        
+     
+        
+</div>
+
+
+
+</div>
+
+
+
+
+
+ {% endblock %}

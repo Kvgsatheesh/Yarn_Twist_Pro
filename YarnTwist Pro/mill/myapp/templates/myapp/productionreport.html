@@ -1,0 +1,104 @@
+{% extends "myapp/main.html" %}
+
+ {% block content %}
+
+
+ 
+<style>
+  .home {
+      display: grid;
+      grid-template-columns: 1fr 5fr ;
+      margin-left: 10px;
+      margin-right: 100px;
+
+  }
+  .date{
+      margin-left: 100px;
+      margin-right: 100px;
+
+      
+      
+  }
+  
+</style>
+ <div class='home'>
+
+
+
+
+  <div>
+      
+      <h4>List of companies</h4>
+     <ol> {%for com in company%}
+      <li><a style="text-decoration:none" href="{% url 'myapp:productionreport'%}?q={{com.id}}"><h5>{{com}}</h5></a></li>
+      {%endfor%}</ol>
+  </div>
+
+  <div class='date'>
+   <h5> status for 
+     {{com_id|capfirst}}</h5> 
+    
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          
+          <th>Colour</th>
+          <th>Count</th>
+          <th>TP</th>
+          <th>Double balance </th>
+          <th>cheese bal</th>
+          <th>single</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+             
+          {% for report in report  %}
+             
+            <tr>
+                  {% for colours in colour  %}
+                   
+                     {% if colours.id == report.Colour %}
+                       
+                      {% for count in count  %}
+                      
+                        {% if  count.id == report.Count %}
+                         
+                          {% for tp in tp  %}
+                          
+                             {% if tp.id == report.Tp %}
+                         
+                                  <td>{{colours}}</td>
+                                  <td>{{count}}</td>
+                                  <td>{{tp}}</td>
+                                  <td> {{report.double_bal}} </td>
+                                  <td> {{report.cheese_bal}} </td>
+                                  <td> {{report.single_bal}} </td>
+                     
+                              {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                    
+                  {% endfor %}
+            </tr>
+             
+        {% endfor %}
+           
+             
+    </tbody>
+    </table>
+  
+  
+  </div>
+
+
+
+ 
+ 
+</div>
+
+{% endblock %}
+
+

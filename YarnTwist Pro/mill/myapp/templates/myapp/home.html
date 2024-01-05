@@ -1,0 +1,183 @@
+{% extends "myapp/main.html" %}
+
+
+
+
+
+
+
+{% block content %}
+<style>
+    .home {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        margin-left: 10px;
+        margin-right: 10px;
+
+    }
+  
+        .date{
+            margin-left: 10px;
+            margin-right: 10px;
+            
+        }
+    
+</style>
+
+
+<div class="home">
+
+    <div>
+        
+            {% include "myapp/listcompany.html" %}
+            
+    </div>
+        
+        
+    <div>
+        
+
+        <h4>Consolidated Statement</h4>
+        <h5>{{From |date:"d - m - Y"}} | {{To |date:"d - m - Y"}}</h5><br>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th>Total Bag</th>
+                    <td>{{total.bag}}</td>
+                </tr> 
+                <tr>
+                    <th>Turn Over</th>
+                    <td>{{total.amount}}</td>
+                </tr>
+                <tr>
+                    <th>Other Income</th>
+                    <td>{{otherincome.tot_income}}</td>
+                </tr>
+                <tr>
+                    <th>Salary</th>
+                    <td>{{salary.tot_salary|floatformat:"0"}}</td>
+                </tr>
+                <tr>
+                    <th>Expense</th>
+                    <td>{{exp.expense}}</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>{{net|floatformat:"0"}}</th>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>No Of Bag</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for custom in  custom %}
+                
+                {% for company in company %}
+                
+                        {% if custom.Company == company.id %}
+                       
+                <tr>
+
+                    <td>{{company}}</td>
+                    <td>{{custom.inward}}</td>
+                    <td>{{custom.amount}}</td>
+
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table> 
+
+   
+    </div>
+        
+    
+         
+
+    
+    <div class='date'>
+        <form method=POST>
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type=submit value='Get' class="btn btn-primary">
+        </form>
+    
+    </div>
+
+
+
+</div>
+
+{% endblock content %}
+
+
+
+
+
+
+{% comment %} <h3>Statement of payments received</h3>    
+        <div class=container>
+            <table class="table table-striped">
+                <thead>
+                    
+                    
+                    <th>Date</th>
+                    <th>Colour</th>
+                    <th>Bag</th>
+                    <th>Amount received</th>
+                    
+                
+                </thead>
+                {%for form in form %}
+                <tr>
+                   
+        
+        
+                    <td>{{form.Date|date:"d - m - Y"}}</td>
+                    <td>{{form.Colour}}</td>
+                    <td class="bag"> {{form.Bag}}</td>
+                    <td class="amt"> {{form.Amount}}</td>
+               
+                    
+                    </tr>
+                    {%endfor%}
+                    <tr>
+                       
+                        <td colspan="2">Total</td>
+                        <td id="b"></td>
+                        <td id="a"></td>
+                    </tr>
+                    </table></div>
+        
+                </form>
+                <script >
+                    const nodes = document.querySelectorAll('.amt');
+                    const arr = Array.from(nodes);
+                    const res = arr.reduce((acc, curr) => {
+                     return acc += Number(curr.textContent)
+                    }, 0);
+                    document.getElementById("a").innerHTML="Rs : "+res;
+                    
+                  
+                    const abc = document.querySelectorAll('.bag');
+                    const ar = Array.from(abc);
+                    const re = ar.reduce((acc, curr) => {
+                     return acc += Number(curr.textContent)
+                    }, 0);
+                    document.getElementById("b").innerHTML=re;
+                    
+                  </script>
+    
+    </div>
+ {% endcomment %}

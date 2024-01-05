@@ -1,0 +1,5 @@
+
+<h4>List of companies</h4>
+       <ol> {%for com in company%}
+        <li><a style="text-decoration:none" href="{% url 'myapp:statement'%}?q={{com.id}}"><h5>{{com}}</h5></a></li>
+        {%endfor%}</ol>

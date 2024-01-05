@@ -1,0 +1,64 @@
+{% extends "myapp/main.html" %}
+
+ {% block content %}
+ 
+ <style>
+    .home {
+        display: grid;
+        grid-template-columns: 4fr 1fr ;
+        margin-left: 200px;
+        margin-right: 200px;
+        
+    }
+    .date{
+      margin-left: 50px;
+        margin-right: 50px;
+    }
+ </style>
+
+<div class='home'>
+
+<div>
+    <h4> Expense List</h4> <h5>Total= {{amount.tot}}</h5>
+
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Expense</th>
+            <th>Amount</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for expense in expense  %}
+            
+          
+            <tr>
+                <td>{{expense.Date}}</td>
+                <td>{{expense.Expense}}</td>
+                <td>{{expense.Amount}}</td>
+                <td>
+                   
+                 <a href="{% url 'myapp:editexpense' %}?q={{expense.id}}"><i class="bi bi-pencil-square"></i></a>
+                   
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+</div>
+
+
+<div class='date'>
+    
+    <form method=POST>
+      {% csrf_token %}
+      {{form.as_p}}
+      <input type=submit class= 'btn btn-primary' value='Get'>
+    </form>
+</div>
+
+</div>
+
+{% endblock %}
